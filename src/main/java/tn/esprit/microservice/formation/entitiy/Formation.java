@@ -1,24 +1,35 @@
 package tn.esprit.microservice.formation.entitiy;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 
 public class Formation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(name = "nom_formation")
     private String nomFormation;
-    private Date dateFormation;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "date_formation")
+
+    private String dateFormation;
+
+    @Column(name = "nombre_place")
     private int nombrePlace;
 }
