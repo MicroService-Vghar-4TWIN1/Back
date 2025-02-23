@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@Controller
+@Controller("/formation")
 class FormationController {
     @Autowired
     private FormationService formationService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Formation> addFormation(@RequestBody Formation formation) {
         System.out.println("Received formation: " + formation); // Debugging line
         if (formation == null) {
@@ -28,7 +28,7 @@ class FormationController {
         formationService.addFormation(formation);
         return ResponseEntity.status(HttpStatus.CREATED).body(formation);
     }
-    @GetMapping
+    @GetMapping("/getall")
             public ResponseEntity<List<Formation>> getAllFormations()
     {
         return ResponseEntity.status(HttpStatus.OK).body(formationService.getAllFormation());
