@@ -15,9 +15,9 @@ public class CorsConfig {
     @Bean
     public CorsWebFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // Allow Angular
-        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow necessary methods
-        corsConfig.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200")); 
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow methods
+        corsConfig.setAllowedHeaders(Arrays.asList("*"));
         corsConfig.setAllowCredentials(true); // Allow authentication if needed
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
