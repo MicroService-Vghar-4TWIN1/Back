@@ -26,6 +26,11 @@ public class ApiGetWayApplication {
 
 				.route("departementMicroService", r -> r.path("/departementMicroService/**")
 						.uri("lb://DEPARTEMENTMICROSERVICE"))
+				.route("formation", r -> r.path("/formation/**")
+						.uri("lb://formation"))
+				.route("equipe", r -> r.path("/equipe/**")
+						.uri("lb://equipe"))
+
 
 
 
