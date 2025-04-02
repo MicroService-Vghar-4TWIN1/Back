@@ -22,6 +22,10 @@ public class Universite implements Serializable{
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idUniv;
     private String nomUniv;
+    @Column
+    private Double latitude;
+    @Column
+    private Double longitude;
 
 
 
