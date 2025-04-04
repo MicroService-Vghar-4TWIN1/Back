@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.microservice.formation.entitiy.Formation;
 
 @Repository
-public interface FormationRepo extends JpaRepository<Formation, Integer> {
+public interface FormationRepo extends JpaRepository<Formation, Long> {
 }
