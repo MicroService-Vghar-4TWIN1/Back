@@ -8,6 +8,9 @@ import tn.esprit.microservice.kassil.entities.Niveau;
 import tn.esprit.microservice.kassil.repositories.EquipeRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
@@ -15,13 +18,15 @@ import java.util.List;
 public class EquipeServiceImpl implements IEquipeService {
 
     private final EquipeRepository equipeRepository;
-
+    private final EmailService emailService;
     public List<Equipe> retrieveAllEquipes() {
         return (List<Equipe>) equipeRepository.findAll();
     }
 
     public Equipe addEquipe(Equipe e) {
-        return equipeRepository.save(e);
+        Equipe saved = equipeRepository.save(e);
+        emailService.sendNotification("Nouvelle Équipe", "L'équipe " + e.getNomEquipe() + " a été ajoutée.");
+        return saved;
     }
 
     public void deleteEquipe(Integer idEquipe) {
@@ -39,13 +44,33 @@ public class EquipeServiceImpl implements IEquipeService {
     public void evoluerEquipes() {
         List<Equipe> equipes = (List<Equipe>) equipeRepository.findAll();
         for (Equipe equipe : equipes) {
-            if (equipe.getNiveau() == Niveau.JUNIOR) {
+            Niveau oldNiveau = equipe.getNiveau();
+            if (oldNiveau == Niveau.JUNIOR) {
                 equipe.setNiveau(Niveau.SENIOR);
-                equipeRepository.save(equipe);
-            } else if (equipe.getNiveau() == Niveau.SENIOR) {
+            } else if (oldNiveau == Niveau.SENIOR) {
                 equipe.setNiveau(Niveau.EXPERT);
+            }
+            if (oldNiveau != equipe.getNiveau()) {
                 equipeRepository.save(equipe);
+                emailService.sendNotification(
+                        "Équipe Évoluée",
+                        "L'équipe " + equipe.getNomEquipe() + " est maintenant " + equipe.getNiveau()
+                );
             }
         }
     }
+
+    @Override
+    public Map<String, Long> getEquipeStats() {
+        return null;
+    }
+
+    public Equipe predictEvolution(Equipe e) {
+        // Simple rule-based prediction (replace with ML model later)
+        boolean shouldEvolve = e.getNbMembres() > 5 && e.getAgeMoyen() > 25 && e.getProjetsLivres() >= 3;
+        e.setProchaineEvolution(shouldEvolve);
+        return equipeRepository.save(e);
+    }
+
+
 }

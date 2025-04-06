@@ -2,6 +2,7 @@ package tn.esprit.microservice.kassil.services;
 
 import tn.esprit.microservice.kassil.entities.Equipe;
 import java.util.List;
+import java.util.Map;
 
 public interface IEquipeService {
     List<Equipe> retrieveAllEquipes();
@@ -10,4 +11,7 @@ public interface IEquipeService {
     Equipe updateEquipe(Equipe e);
     Equipe retrieveEquipe(Integer equipeId);
     void evoluerEquipes();
+    Map<String, Long> getEquipeStats();
+    Equipe predictEvolution(Equipe e);
+
 }

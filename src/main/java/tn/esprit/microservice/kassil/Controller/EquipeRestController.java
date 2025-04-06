@@ -1,16 +1,19 @@
 package tn.esprit.microservice.kassil.Controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.microservice.kassil.entities.Equipe;
 import tn.esprit.microservice.kassil.services.IEquipeService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/equipe")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EquipeRestController {
     IEquipeService equipeService;
     // http://localhost:8089/Kaddem/equipe/retrieve-all-equipes
@@ -47,7 +50,13 @@ public class EquipeRestController {
 
     @Scheduled(cron="0 0 13 * * *")
     @PutMapping("/faireEvoluerEquipes")
-    public void faireEvoluerEquipes() {
-        equipeService.evoluerEquipes() ;
+    public ResponseEntity<String> faireEvoluerEquipes() {
+        equipeService.evoluerEquipes();
+        return ResponseEntity.ok("Les équipes ont été mises à jour avec succès.");
     }
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Long>> getStats() {
+        return ResponseEntity.ok(equipeService.getEquipeStats());
+    }
+
 }

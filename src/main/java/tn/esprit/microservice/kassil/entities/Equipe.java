@@ -1,8 +1,13 @@
 package tn.esprit.microservice.kassil.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@Getter
+@Setter
 @Entity
 public class Equipe implements Serializable {
     @Id
@@ -14,18 +19,15 @@ public class Equipe implements Serializable {
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
 
-    private Integer detailEquipeId; // Foreign key as Integer
+    private Integer detailEquipeId;
 
-    // Getters and Setters
-    public Integer getIdEquipe() { return idEquipe; }
-    public void setIdEquipe(Integer idEquipe) { this.idEquipe = idEquipe; }
+    // 📊 New fields for AI
+    private Integer nbMembres;
+    private Double ageMoyen;
+    private Integer projetsLivres;
 
-    public String getNomEquipe() { return nomEquipe; }
-    public void setNomEquipe(String nomEquipe) { this.nomEquipe = nomEquipe; }
-
-    public Niveau getNiveau() { return niveau; }
-    public void setNiveau(Niveau niveau) { this.niveau = niveau; }
-
-    public Integer getDetailEquipeId() { return detailEquipeId; }
-    public void setDetailEquipeId(Integer detailEquipeId) { this.detailEquipeId = detailEquipeId; }
+    // 🧠 Prediction output (optional)
+    private Boolean prochaineEvolution;
 }
+
+
