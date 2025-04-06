@@ -1,9 +1,11 @@
 package com.example.ressource.controller;
 
 import com.example.ressource.entity.Ressource;
+import com.example.ressource.entity.Type;
 import com.example.ressource.service.IRessourceService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +14,6 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/Ressource")
-@CrossOrigin(origins = "http://localhost:4200")
 public class RessourceRestController {
 
     IRessourceService ressourceService;
@@ -27,10 +28,21 @@ public class RessourceRestController {
 
     }
 
-    @PostMapping()
-    public Ressource addRessource(@RequestBody Ressource r) {
-        Ressource ressource = ressourceService.addRessource(r);
-        return ressource;
+    @PostMapping
+    public Ressource addRessource(
+            @RequestParam(required = false) String titre,
+            @RequestParam(required = false) String url,
+            @RequestParam(required = false) String description,
+            @RequestParam Type type,
+            @RequestParam(required = false) MultipartFile pdfFile) {
+
+        Ressource ressource = new Ressource();
+        ressource.setTitre(titre);
+        ressource.setUrl(url);
+        ressource.setDescription(description);
+        ressource.setType(type);
+
+        return ressourceService.addRessource(ressource, pdfFile);
     }
 
     @DeleteMapping("/{ressource-id}")
@@ -54,3 +66,4 @@ public class RessourceRestController {
         return ressourceService.generateSummaryForRessource(id);
     }
 }
+
