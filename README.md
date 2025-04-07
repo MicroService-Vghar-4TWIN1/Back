@@ -18,7 +18,7 @@ Microservice pour la gestion des ressources pédagogiques avec statistique par t
 
 ##  Points ajoutés :
 
-1. **Tests unitaires : test utilisant JUnit et Mockito pour le résumé du pdf.
-2. **Dockerisation
-3. **Logs et journalisation
+1. ** Tests unitaires : test utilisant JUnit et Mockito pour le résumé du pdf.
+2. ** Dockerisation
+3. ** Logs et journalisation
 
