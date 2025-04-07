@@ -14,7 +14,11 @@ public interface IRessourceService {
     Ressource addRessource(Ressource ressource, MultipartFile pdfFile);
 
     public void removeRessource(Long rId);
-    public Ressource modifyRessource(Ressource r);
+
+
+
+    Ressource modifyRessource(Long id, Ressource ressourceDetails, MultipartFile pdfFile);
+
     Map<String, Long> getNombreRessourcesParType();
     String generateSummaryForRessource(Long id) throws IOException;
 

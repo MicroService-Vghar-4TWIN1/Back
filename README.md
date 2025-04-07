@@ -1,4 +1,4 @@
-#  Microservice Ressource – Spring Boot
+# Microservice Ressource – Spring Boot
 
 Microservice pour la gestion des ressources pédagogiques avec statistique par type , upload de PDF, classification par type, et génération de résumé.
 
@@ -16,8 +16,9 @@ Microservice pour la gestion des ressources pédagogiques avec statistique par t
 - MySQL
 - OpenPDF / PDFBox (résumé PDF)
 
-### Points ajoutés  :
+##  Points ajoutés :
 
-1. **Tests unitaires** : test utilisant `JUnit` et `Mockito` pour le résumé du pdf.
-2. **Dockerisation** 
-3. **Logs et journalisation**
+1. **Tests unitaires : test utilisant JUnit et Mockito pour le résumé du pdf.
+2. **Dockerisation
+3. **Logs et journalisation
+

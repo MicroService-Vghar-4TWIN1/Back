@@ -4,10 +4,14 @@ import com.example.ressource.entity.Ressource;
 import com.example.ressource.entity.Type;
 import com.example.ressource.service.IRessourceService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +19,7 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/Ressource")
 public class RessourceRestController {
+    private final Path rootLocation = Paths.get("upload-dir");
 
     IRessourceService ressourceService;
     @GetMapping()
@@ -50,11 +55,36 @@ public class RessourceRestController {
         ressourceService.removeRessource(chId);
     }
 
-    @PutMapping()
-    public Ressource modifyRessource(@RequestBody Ressource r) {
-        Ressource ressource = ressourceService.modifyRessource(r);
-        return ressource;
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Ressource> updateRessource(
+            @PathVariable Long id,
+            @RequestParam(required = false) String titre,
+            @RequestParam(required = false) String url,
+            @RequestParam(required = false) String description,
+            @RequestParam Type type,
+            @RequestParam(required = false) String currentPdf, // Pour savoir si on garde l'ancien fichier
+            @RequestParam(required = false) MultipartFile pdfFile) {
+
+        Ressource ressourceDetails = new Ressource();
+        ressourceDetails.setTitre(titre);
+        ressourceDetails.setUrl(url);
+        ressourceDetails.setDescription(description);
+        ressourceDetails.setType(type);
+        ressourceDetails.setPdf("true".equals(currentPdf) ? "keep" : null);
+
+        try {
+            Ressource updatedRessource = ressourceService.modifyRessource(id, ressourceDetails, pdfFile);
+            return ResponseEntity.ok(updatedRessource);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
+
+
+
 
     @GetMapping("/stats")
     public Map<String, Long> getStatsParType() {

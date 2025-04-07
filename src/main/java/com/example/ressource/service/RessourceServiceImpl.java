@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -62,9 +59,51 @@ public class RessourceServiceImpl implements IRessourceService {
     }
 
     @Override
-    public Ressource modifyRessource(Ressource r) {
-        return ressourceRepository.save(r);
+    public Ressource modifyRessource(Long id, Ressource ressourceDetails, MultipartFile pdfFile) {
+        return ressourceRepository.findById(id)
+                .map(ressource -> {
+                    // Mettre à jour les champs simples
+                    ressource.setTitre(ressourceDetails.getTitre());
+                    ressource.setUrl(ressourceDetails.getUrl());
+                    ressource.setDescription(ressourceDetails.getDescription());
+                    ressource.setType(ressourceDetails.getType());
+
+                    // Gestion du fichier PDF
+                    if (pdfFile != null && !pdfFile.isEmpty()) {
+                        try {
+                            // Supprimer l'ancien fichier s'il existe
+                            if (ressource.getPdf() != null) {
+                                Path oldFile = rootLocation.resolve(ressource.getPdf());
+                                Files.deleteIfExists(oldFile);
+                            }
+
+                            // Enregistrer le nouveau fichier
+                            String filename = UUID.randomUUID() + "-" + pdfFile.getOriginalFilename();
+                            Files.copy(pdfFile.getInputStream(), this.rootLocation.resolve(filename));
+                            ressource.setPdf(filename);
+                        } catch (IOException e) {
+                            throw new RuntimeException("Erreur lors de la mise à jour du fichier", e);
+                        }
+                    } else if (ressourceDetails.getPdf() == null) {
+                        // Si pdf est explicitement null (suppression du fichier)
+                        if (ressource.getPdf() != null) {
+                            try {
+                                Path oldFile = rootLocation.resolve(ressource.getPdf());
+                                Files.deleteIfExists(oldFile);
+                            } catch (IOException e) {
+                                throw new RuntimeException("Erreur lors de la suppression de l'ancien fichier", e);
+                            }
+                        }
+                        ressource.setPdf(null);
+                    }
+                    // Si pdfFile est null mais que ressourceDetails.getPdf() n'est pas null, on garde l'ancien fichier
+
+                    return ressourceRepository.save(ressource);
+                })
+                .orElseThrow(() -> new RuntimeException("Ressource non trouvée avec l'id: " + id));
     }
+
+
 
     @Override
     public Map<String, Long> getNombreRessourcesParType() {
