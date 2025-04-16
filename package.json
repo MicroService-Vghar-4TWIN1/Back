@@ -1,0 +1,25 @@
+{
+  "name": "s4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+		"dev": "nodemon server.js",
+		"test": "echo \"No test specified\" && exit 0",
+		"build-dev": "echo \"No build needed for backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.8.3",
+    "socket.io": "^4.8.1",
+    "twig": "^1.17.1",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
