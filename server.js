@@ -1,13 +1,43 @@
 const express = require("express");
 const http = require("http");
 const path = require("path");
+const { Eureka } = require('eureka-js-client');
 
 const mongoose = require("mongoose");
 const configDb = require("./config/db.json");
 
 const financialAidRouter = require('./routers/financialAid');
-// ceci est un exemple :
 
+const eurekaClient = new Eureka({
+    instance: {
+      app: 'FINANCIALAID', 
+      instanceId: 'financial-aid-service-1',
+      hostName: 'localhost',
+      ipAddr: '127.0.0.1',
+      port: {
+        '$': 3000, 
+        '@enabled': true,
+      },
+      vipAddress: 'FINANCIALAID',
+      dataCenterInfo: {
+        '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+        name: 'MyOwn',
+      },
+    },
+    eureka: {
+      host: 'localhost', 
+      port: 8761,
+      servicePath: '/eureka/apps/',
+    },
+  });
+  
+  eurekaClient.start((error) => {
+    if (error) {
+      console.error('Eureka registration failed:', error);
+    } else {
+      console.log('Service registered with Eureka!');
+    }
+  });
 
 
 const app = express();
