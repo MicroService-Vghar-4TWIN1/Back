@@ -1,6 +1,13 @@
 FROM node:20-alpine
-EXPOSE 3000
-COPY package*.json … 
-RUN npm install --omit=dev
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g npm@9 && \
+    npm install --omit=dev
+
 COPY . .
-CMD  ["node","server.js"] 
+
+EXPOSE 3000
+CMD ["node", "server.js"]
