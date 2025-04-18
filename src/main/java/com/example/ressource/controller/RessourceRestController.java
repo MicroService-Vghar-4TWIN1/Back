@@ -4,6 +4,8 @@ import com.example.ressource.entity.Ressource;
 import com.example.ressource.entity.Type;
 import com.example.ressource.service.IRessourceService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,11 +16,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-
+@RefreshScope
 @RestController
 @AllArgsConstructor
 @RequestMapping("/Ressource")
 public class RessourceRestController {
+
+
+
     private final Path rootLocation = Paths.get("upload-dir");
 
     IRessourceService ressourceService;
