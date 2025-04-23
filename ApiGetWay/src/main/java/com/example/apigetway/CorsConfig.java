@@ -16,13 +16,15 @@ public class CorsConfig {
     public CorsWebFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow methods
-        corsConfig.setAllowedHeaders(Arrays.asList("*"));
-        corsConfig.setAllowCredentials(true); // Allow authentication if needed
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With"));
+        corsConfig.setExposedHeaders(Arrays.asList("Authorization"));
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setMaxAge(3600L); // 1 hour cache for preflight
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig); // Apply CORS to all routes
+        source.registerCorsConfiguration("/**", corsConfig);
 
-        return new CorsWebFilter((CorsConfigurationSource) source);
+        return new CorsWebFilter(source);
     }
 }
