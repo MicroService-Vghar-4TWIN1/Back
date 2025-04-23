@@ -116,5 +116,15 @@ services:
       - spring.datasource.username=root
       - spring.datasource.password=root
 
+
+  universite:
+    build: ./university
+    image: yosrba/university:1.0
+    container_name: university
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+
 volumes:
   db_mysql:
