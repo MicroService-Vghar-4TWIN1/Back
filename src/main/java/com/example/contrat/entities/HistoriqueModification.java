@@ -27,7 +27,7 @@ public class HistoriqueModification {
 
     private String action; // Exemple : "Modification de statut", "Ajout de document"
     private String details; // Détails sur ce qui a été modifié
-   // private String utilisateur; // L'utilisateur qui a effectué l'action
+    // private String utilisateur; // L'utilisateur qui a effectué l'action
     private Date dateModification; // Date de la modification
 
 }

@@ -4,15 +4,19 @@ import com.example.contrat.entities.Contrat;
 import com.example.contrat.entities.HistoriqueModification;
 import com.example.contrat.services.HistoriqueModificationService;
 import com.example.contrat.services.IContratService;
+import com.example.contrat.services.KeycloakAdminClientService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -112,6 +116,19 @@ public class ContratRestController {
 		return ResponseEntity.ok(historiques);
 	}
 
-}
+	@Autowired
+	private KeycloakAdminClientService keycloakService;
 
+	@PreAuthorize("hasRole('admin')")
+	@GetMapping("/keycloak-users")
+	public ResponseEntity<List<Map<String, Object>>> getKeycloakUsers() {
+		return ResponseEntity.ok(keycloakService.getAllUsers());
+	}
+
+
+
+
+
+
+}
 
