@@ -4,6 +4,7 @@ import com.example.ressource.entity.Ressource;
 import com.example.ressource.entity.Type;
 import com.example.ressource.service.IRessourceService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,6 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/Ressource")
 public class RessourceRestController {
-
-
-
     private final Path rootLocation = Paths.get("upload-dir");
 
     IRessourceService ressourceService;
@@ -43,14 +41,14 @@ public class RessourceRestController {
             @RequestParam(required = false) String titre,
             @RequestParam(required = false) String url,
             @RequestParam(required = false) String description,
-            @RequestParam Type type,
+            @RequestParam String type,  // Change from Type to String
             @RequestParam(required = false) MultipartFile pdfFile) {
 
         Ressource ressource = new Ressource();
         ressource.setTitre(titre);
         ressource.setUrl(url);
         ressource.setDescription(description);
-        ressource.setType(type);
+        ressource.setType(Type.valueOf(type));  // Convert String to Enum here
 
         return ressourceService.addRessource(ressource, pdfFile);
     }
@@ -101,4 +99,6 @@ public class RessourceRestController {
         return ressourceService.generateSummaryForRessource(id);
     }
 }
+
+
 

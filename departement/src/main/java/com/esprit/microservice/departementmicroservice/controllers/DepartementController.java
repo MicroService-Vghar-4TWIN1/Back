@@ -13,7 +13,7 @@ import java.util.List;
 @RefreshScope
 @RestController
 @AllArgsConstructor
-@RequestMapping("/departementMicroService")
+@RequestMapping("/departement-service")
 public class DepartementController {
     @Autowired
      private  DepartementService departementService;

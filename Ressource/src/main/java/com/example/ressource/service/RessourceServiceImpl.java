@@ -24,12 +24,12 @@ public class RessourceServiceImpl implements IRessourceService {
     @Override
     public List<Ressource> retrieveAllRessources() {
         return ressourceRepository.findAll();
-           }
+    }
 
     @Override
     public Ressource retrieveRessource(Long rId) {
         return ressourceRepository.findById(rId).get();
-            }
+    }
 
     @Override
     public Ressource addRessource(Ressource ressource, MultipartFile pdfFile) {

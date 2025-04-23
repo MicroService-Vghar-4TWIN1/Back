@@ -91,6 +91,20 @@
             <artifactId>stripe-java</artifactId>
             <version>24.5.0</version> <!-- Use the latest version -->
         </dependency>
+
+
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <version>24.0.1</version> <!-- adapte à ta version de Keycloak -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
+
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

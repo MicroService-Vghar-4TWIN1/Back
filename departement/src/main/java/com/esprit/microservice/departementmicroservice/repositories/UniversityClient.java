@@ -10,9 +10,9 @@ import java.util.List;
 @FeignClient(name = "UNIVERSITE") // Eureka will route it
 public interface UniversityClient {
 
-    @GetMapping("/universite/universite/retrieve-all-universites")
+    @GetMapping("/universite/retrieve-all-universites")
     List<UniversityDto> getAllUniversities();
 
-    @GetMapping("/universite/universite/retrieve-universite/{id}")
+    @GetMapping("/universite/retrieve-universite/{id}")
     UniversityDto getUniversityById(@PathVariable("id") Integer id);
 }

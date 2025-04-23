@@ -17,7 +17,7 @@ import java.util.Set;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/universite")
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class UniversiteRestController {
 	@Autowired
 	IUniversiteService universiteService;
