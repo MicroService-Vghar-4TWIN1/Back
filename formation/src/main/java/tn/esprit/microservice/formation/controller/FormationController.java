@@ -17,7 +17,7 @@ import java.util.List;
 @ToString
 @RestController
 @AllArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/formation")
 class FormationController {
     @Autowired
     private FormationService formationService;
