@@ -3,7 +3,6 @@ package tn.esprit.microservice.formation.controller;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import tn.esprit.microservice.formation.service.IFormationService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-@RefreshScope
 @ToString
 @RestController
 @AllArgsConstructor
