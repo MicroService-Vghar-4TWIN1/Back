@@ -24,7 +24,7 @@ public class ApiGetWayApplication {
 				.route("Ressource", r -> r.path("/Ressource/**")
 						.uri("lb://RESSOURCE"))//job:8081
 
-				.route("departementMicroService", r -> r.path("/departementMicroService/**")
+				.route("departement-microservice", r -> r.path("/departement-microservice/**")
 						.uri("lb://DEPARTEMENTMICROSERVICE"))
 				.route("formation", r -> r.path("/formation/**")
 						.uri("lb://formation"))
