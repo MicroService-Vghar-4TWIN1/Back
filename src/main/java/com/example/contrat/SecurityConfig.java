@@ -1,4 +1,4 @@
-package com.example.contrat.security;
+package com.example.contrat;
 
 import com.example.contrat.KeycloakRealmRoleConverter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
