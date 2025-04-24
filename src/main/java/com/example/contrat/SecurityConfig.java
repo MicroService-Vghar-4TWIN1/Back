@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/Contrat/retrieve-all-contrats").hasRole("admin") // or "ADMIN" as per Keycloak
+                        //.requestMatchers("/Contrat/retrieve-all-contrats").hasRole("admin") // or "ADMIN" as per Keycloak
                         .requestMatchers("/Contrat/**").authenticated()
                         .anyRequest().permitAll()
                 )
