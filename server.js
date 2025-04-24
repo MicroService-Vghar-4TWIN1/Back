@@ -1,4 +1,3 @@
-// server.js
 const express = require("express");
 const http = require("http");
 const path = require("path");
@@ -8,44 +7,57 @@ const configDb = require("./config/db.json");
 const { connectRabbitMQ } = require("./config/rabbitmq");
 
 const financialAidRouter = require("./routers/financialAid");
+const { startConsumer } = require("./services/financialAidConsumer");
 
 const app = express();
 const server = http.createServer(app);
 
-// Initialize RabbitMQ connection
-connectRabbitMQ().catch((err) => {
-  console.error("Failed to connect to RabbitMQ:", err);
-});
+// Initialize services
+async function initializeServices() {
+  try {
+    // Connect to MongoDB
+    await mongoose.connect(configDb.mongo.uri);
+    console.log("Connected to MongoDB");
 
-// After RabbitMQ connection
-const { startConsumers } = require("./services/financialAidConsumer");
-connectRabbitMQ()
-  .then(() => startConsumers())
-  .catch((err) => console.error("Failed to start consumers:", err));
+    // Connect to RabbitMQ and start consumer
+    await connectRabbitMQ();
+    console.log("RabbitMQ connected and queues/exchanges set up");
 
-// Eureka client configuration remains the same...
+    await startConsumer();
+    console.log("Financial Aid Consumer started successfully");
+  } catch (error) {
+    console.error("Initialization failed:", error);
+    process.exit(1);
+  }
+}
 
+// Express configuration
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "twig");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use("/finance", financialAidRouter);
 
-mongoose
-  .connect(configDb.mongo.uri)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.error("MongoDB connection error:", error));
-
+// Start server
 server.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
 
+// Initialize all services
+initializeServices();
+
 // Graceful shutdown
+let rabbitMQConnection; // You'll need to export this from rabbitmq.js
+
 process.on("SIGINT", async () => {
   console.log("Shutting down gracefully...");
-  await mongoose.disconnect();
-  if (connection) await connection.close();
-  process.exit(0);
+  try {
+    await mongoose.disconnect();
+    if (rabbitMQConnection) await rabbitMQConnection.close();
+    console.log("All connections closed");
+    process.exit(0);
+  } catch (error) {
+    console.error("Shutdown error:", error);
+    process.exit(1);
+  }
 });
