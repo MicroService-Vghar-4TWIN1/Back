@@ -9,7 +9,16 @@ const {
     deleteRequest,
     updateRequest
   } = require("../controllers/financialAidController");
-  
+  const { requestDepartments } = require('../rabbit/rpcClient');
+  router.get('/departments', async (req, res) => {
+    try {
+      const departments = await requestDepartments(); // from RabbitMQ service
+      res.json(departments);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error retrieving departments');
+    }
+  });
 router.post('/', createRequest);
 
 router.get('/', getAllRequests);

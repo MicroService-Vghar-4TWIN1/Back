@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const cors = require("cors"); // Add this line
+const { requestDepartments } = require('./rabbit/rpcClient');
 
 const { Eureka } = require('eureka-js-client');
 require("dotenv").config();
@@ -22,8 +23,8 @@ const eurekaClient = new Eureka({
   instance: {
     app: 'FINANCIALAID',
     instanceId: 'finance-service-1',
-    hostName: 'financeService',
-    ipAddr: 'financeService',
+    hostName: 'localhost',
+    ipAddr: '127.0.0.1',
     port: {
       '$': 3000,
       '@enabled': true,
@@ -35,7 +36,7 @@ const eurekaClient = new Eureka({
     },
   },
   eureka: {
-    host: 'eureka-server',
+    host: 'localhost',
     port: 8761,
     servicePath: '/eureka/apps/',
     maxRetries: 10,
@@ -74,7 +75,15 @@ mongoose.connect(process.env.MONGODB_URI|| 'mongodb://localhost:27017/financeDB'
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
-
+  app.get('/finance/fi/aid-request', async (req, res) => {
+    try {
+      const departments = await requestDepartments();
+      res.json({ departments });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).send('Failed to fetch departments.');
+    }
+  });
 
 server.listen(3000, '0.0.0.0', ()=>{
     console.log('server is running on http://localhost:3000');

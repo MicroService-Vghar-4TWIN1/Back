@@ -18,7 +18,9 @@ const financialAidSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  dateReviewed: Date
+  dateReviewed: Date,
+  departmentId: Number 
+
 });
 
 module.exports = mongoose.model('FinancialAid', financialAidSchema);

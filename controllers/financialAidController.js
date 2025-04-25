@@ -1,10 +1,16 @@
 const FinancialAid = require('../models/financialAid');
+const { requestDepartments } = require('../rabbit/rpcClient');
 
 // Create a financial aid request
 exports.createRequest = async (req, res) => {
   try {
-    const newRequest = new FinancialAid(req.body);
+    const { amountRequested, reason, departmentId } = req.body;
+
+    if (!departmentId) return res.status(400).json({ error: 'Department is required.' });
+
+    const newRequest = new FinancialAid({ amountRequested, reason, departmentId });
     const saved = await newRequest.save();
+
     res.status(201).json(saved);
   } catch (error) {
     res.status(400).json({ error: error.message });
