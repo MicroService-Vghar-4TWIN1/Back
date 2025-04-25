@@ -20,6 +20,8 @@ const financialAidSchema = new mongoose.Schema({
     default: Date.now,
   },
   dateReviewed: Date,
+  departmentId: Number 
+
 
 
 });

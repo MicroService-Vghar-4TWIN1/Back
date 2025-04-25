@@ -1,6 +1,8 @@
 const express = require("express");
 const http = require("http");
 const path = require("path");
+const { requestDepartments } = require('./rabbit/rpcClient');
+
 const { jwtCheck } = require('./middlewares/roles');
 const { Eureka } = require('eureka-js-client');
 require("dotenv").config();

@@ -4,12 +4,16 @@ const FinancialAid = require('../models/financialAid');
 exports.createRequest = async (req, res) => {
   try {
     const user = req.auth;
+    const { amountRequested, reason, departmentId } = req.body;
+    if (!departmentId) return res.status(400).json({ error: 'Department is required.' });
+
     const newRequest = new FinancialAid({
       ...req.body,
       createdBy: user.preferred_username || user.name || user.sub,
       studentId: user.sub,
       status: 'pending',
-      dateSubmitted: new Date()
+      dateSubmitted: new Date(),
+      amountRequested, reason, departmentId
     });
 
     const saved = await newRequest.save();
