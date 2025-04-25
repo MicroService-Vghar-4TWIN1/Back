@@ -1,8 +1,8 @@
 package com.example.ressource.entity;
 
+// Backend enum
 public enum Type {
-    E_Book,
-    Cours,
-    Article
-
+    E_BOOK,  // Note the underscore
+    COURS,
+    ARTICLE
 }

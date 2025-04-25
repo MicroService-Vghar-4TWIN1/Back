@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 @RefreshScope
@@ -37,20 +38,27 @@ public class RessourceRestController {
     }
 
     @PostMapping
-    public Ressource addRessource(
-            @RequestParam(required = false) String titre,
+    public ResponseEntity<?> addRessource(
+            @RequestParam String titre,
             @RequestParam(required = false) String url,
-            @RequestParam(required = false) String description,
-            @RequestParam String type,  // Change from Type to String
+            @RequestParam String description,
+            @RequestParam String type,  // Remove required = false
             @RequestParam(required = false) MultipartFile pdfFile) {
 
-        Ressource ressource = new Ressource();
-        ressource.setTitre(titre);
-        ressource.setUrl(url);
-        ressource.setDescription(description);
-        ressource.setType(Type.valueOf(type));  // Convert String to Enum here
+        try {
+            Ressource ressource = new Ressource();
+            ressource.setTitre(titre);
+            ressource.setUrl(url);
+            ressource.setDescription(description);
 
-        return ressourceService.addRessource(ressource, pdfFile);
+            // Convert to uppercase to ensure enum match
+            ressource.setType(Type.valueOf(type.toUpperCase()));
+
+            return ResponseEntity.ok(ressourceService.addRessource(ressource, pdfFile));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Invalid type value. Valid values are: " +
+                    Arrays.toString(Type.values()));
+        }
     }
 
     @DeleteMapping("/{ressource-id}")

@@ -8,11 +8,13 @@ import com.example.contrat.services.KeycloakAdminClientService;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +28,10 @@ public class ContratRestController {
 	IContratService contratService;
 	private final HistoriqueModificationService historiqueModificationService;
 	// http://localhost:8044/Kaddem/contrat/retrieve-all-contrats
+
+
+	@Autowired
+	private KeycloakAdminClientService keycloakService;
 
 	@GetMapping("/retrieve-all-contrats")
 	public List<Contrat> getContrats() {
@@ -54,9 +60,14 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/econtrat/add-contrat
 	@PostMapping("/add-contrat")
-	public ResponseEntity<Contrat> addContrat(@RequestBody Contrat c) {
+	public ResponseEntity<Contrat> addContrat(@RequestBody Contrat c, @RequestHeader("Authorization") String token) {
+		// Vérifier que le créateur est bien défini
+		if (c.getCreateur() == null || c.getCreateur().isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le créateur du contrat doit être spécifié");
+		}
+
 		Contrat contrat = contratService.addContrat(c);
-		return ResponseEntity.ok().body(contrat);  // Retourne un ResponseEntity
+		return ResponseEntity.ok().body(contrat);
 	}
 
 	// http://localhost:8089/Kaddem/contrat/remove-contrat/1
@@ -116,8 +127,7 @@ public class ContratRestController {
 		return ResponseEntity.ok(historiques);
 	}
 
-	@Autowired
-	private KeycloakAdminClientService keycloakService;
+
 
 	@PreAuthorize("hasRole('admin')")
 	@GetMapping("/keycloak-users")

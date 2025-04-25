@@ -31,7 +31,8 @@ public class ApiGetWayApplication {
 				.route("equipe", r -> r.path("/equipe/**")
 						.uri("lb://equipe"))
 
-
+				.route("finance", r -> r.path("/finance/**")
+						.uri("lb://FINANCIALAID"))
 
 
 				.build();

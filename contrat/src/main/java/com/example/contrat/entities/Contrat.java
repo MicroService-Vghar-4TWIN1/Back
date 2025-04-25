@@ -27,7 +27,7 @@ public class Contrat implements Serializable{
     private Boolean archive;
     private Integer montantContrat;
     private String nom;
-
+    private String createur;
 
     @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

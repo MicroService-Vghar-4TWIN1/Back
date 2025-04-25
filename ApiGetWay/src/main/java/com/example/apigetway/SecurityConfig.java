@@ -36,6 +36,9 @@ public class SecurityConfig {
                         .pathMatchers("/eureka/**").permitAll()
                         .pathMatchers("/actuator/**").permitAll()
                         .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                        .pathMatchers("/finance/**").authenticated()
+                        .pathMatchers("/Ressource/**").authenticated()
+                        .pathMatchers("/Contrat/**").authenticated()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

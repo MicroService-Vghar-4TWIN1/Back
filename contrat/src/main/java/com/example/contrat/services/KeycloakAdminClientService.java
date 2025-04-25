@@ -1,5 +1,9 @@
 package com.example.contrat.services;
 
+import com.nimbusds.jwt.JWT;
+import org.keycloak.TokenVerifier;
+import org.keycloak.common.VerificationException;
+import org.keycloak.representations.AccessToken;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -31,6 +35,16 @@ public class KeycloakAdminClientService {
 
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
         return (String) response.getBody().get("access_token");
+    }
+
+    public String getUsernameFromToken(String token) {
+        try {
+            AccessToken accessToken = TokenVerifier.create(token, AccessToken.class)
+                    .getToken();
+            return accessToken.getPreferredUsername();
+        } catch (VerificationException e) {
+            throw new RuntimeException("Failed to decode token", e);
+        }
     }
 
 

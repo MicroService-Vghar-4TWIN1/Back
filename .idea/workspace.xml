@@ -30,6 +30,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/Yosr/OneDrive - ESPRIT/Bureau/MicroProjet/configServer_",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -42,7 +43,7 @@
 }]]></component>
   <component name="RunManager">
     <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="configServer_" />
+      <module name="Contrat" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.configserver_.ConfigServerApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
