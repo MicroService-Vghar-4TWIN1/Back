@@ -5,6 +5,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/departement/pom.xml" />
+        <option value="$PROJECT_DIR$/ApiGetWay/pom.xml" />
+        <option value="$PROJECT_DIR$/configServer_/pom.xml" />
+        <option value="$PROJECT_DIR$/contrat/pom.xml" />
+        <option value="$PROJECT_DIR$/equipe/pom.xml" />
+        <option value="$PROJECT_DIR$/Eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/formation/pom.xml" />
+        <option value="$PROJECT_DIR$/Ressource/pom.xml" />
+        <option value="$PROJECT_DIR$/university/pom.xml" />
       </list>
     </option>
   </component>

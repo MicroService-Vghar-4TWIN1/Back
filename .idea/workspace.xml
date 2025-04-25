@@ -31,7 +31,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Yosr/OneDrive - ESPRIT/Bureau/MicroProjet/configServer_",
+    "last_opened_file_path": "C:/Users/Yosr/OneDrive - ESPRIT/Bureau/final_inchalah",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -41,10 +41,66 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.KassilApplication">
+    <configuration name="ApiGetWayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ApiGetWay" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.apigetway.ApiGetWayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="Contrat" />
+      <module name="configServer_" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.configserver_.ConfigServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContratApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Contrat" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.contrat.ContratApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DepartementMicroServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="departementMicroService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.esprit.microservice.departementmicroservice.DepartementMicroServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EurikaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eurika" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eurika.EurikaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FormationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="formation" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="tn.esprit.microservice.formation.FormationApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KassilApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Kassil" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="tn.esprit.microservice.kassil.KassilApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RessourceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Ressource" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.ressource.RessourceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UniversiteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="universite" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.universite.UniversiteApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -61,6 +117,7 @@
       <workItem from="1741602015103" duration="887000" />
       <workItem from="1742992384569" duration="42000" />
       <workItem from="1745007519845" duration="5042000" />
+      <workItem from="1745546411782" duration="1175000" />
     </task>
     <servers />
   </component>

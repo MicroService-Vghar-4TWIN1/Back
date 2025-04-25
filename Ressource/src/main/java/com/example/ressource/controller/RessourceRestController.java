@@ -1,30 +1,23 @@
 package com.example.ressource.controller;
 
+import com.example.ressource.entity.ContratDTO;
 import com.example.ressource.entity.Ressource;
-import com.example.ressource.entity.Type;
 import com.example.ressource.service.IRessourceService;
+import feign.FeignException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-@RefreshScope
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/Ressource")
 public class RessourceRestController {
-    private final Path rootLocation = Paths.get("upload-dir");
-
+    @Autowired
     IRessourceService ressourceService;
     @GetMapping()
     public List<Ressource> getRessources() {
@@ -37,28 +30,10 @@ public class RessourceRestController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<?> addRessource(
-            @RequestParam String titre,
-            @RequestParam(required = false) String url,
-            @RequestParam String description,
-            @RequestParam String type,  // Remove required = false
-            @RequestParam(required = false) MultipartFile pdfFile) {
-
-        try {
-            Ressource ressource = new Ressource();
-            ressource.setTitre(titre);
-            ressource.setUrl(url);
-            ressource.setDescription(description);
-
-            // Convert to uppercase to ensure enum match
-            ressource.setType(Type.valueOf(type.toUpperCase()));
-
-            return ResponseEntity.ok(ressourceService.addRessource(ressource, pdfFile));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Invalid type value. Valid values are: " +
-                    Arrays.toString(Type.values()));
-        }
+    @PostMapping()
+    public Ressource addRessource(@RequestBody Ressource r) {
+        Ressource ressource = ressourceService.addRessource(r);
+        return ressource;
     }
 
     @DeleteMapping("/{ressource-id}")
@@ -66,47 +41,33 @@ public class RessourceRestController {
         ressourceService.removeRessource(chId);
     }
 
-
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Ressource> updateRessource(
-            @PathVariable Long id,
-            @RequestParam(required = false) String titre,
-            @RequestParam(required = false) String url,
-            @RequestParam(required = false) String description,
-            @RequestParam Type type,
-            @RequestParam(required = false) String currentPdf, // Pour savoir si on garde l'ancien fichier
-            @RequestParam(required = false) MultipartFile pdfFile) {
-
-        Ressource ressourceDetails = new Ressource();
-        ressourceDetails.setTitre(titre);
-        ressourceDetails.setUrl(url);
-        ressourceDetails.setDescription(description);
-        ressourceDetails.setType(type);
-        ressourceDetails.setPdf("true".equals(currentPdf) ? "keep" : null);
-
-        try {
-            Ressource updatedRessource = ressourceService.modifyRessource(id, ressourceDetails, pdfFile);
-            return ResponseEntity.ok(updatedRessource);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping()
+    public Ressource modifyRessource(@RequestBody Ressource r) {
+        Ressource ressource = ressourceService.modifyRessource(r);
+        return ressource;
     }
-
-
-
-
 
     @GetMapping("/stats")
     public Map<String, Long> getStatsParType() {
         return ressourceService.getNombreRessourcesParType();
     }
 
-    @GetMapping("/{id}/summary")
-    public String getPdfSummary(@PathVariable Long id) throws IOException {
-        return ressourceService.generateSummaryForRessource(id);
+    @GetMapping("/contrat/{id}")
+    public ContratDTO getContratById(@PathVariable Integer id){
+        return this.ressourceService.getContratById(id);
+    }
+
+    @GetMapping("/contrats")
+    public ResponseEntity<?> getAllContrats() {
+        try {
+            List<ContratDTO> contrats = ressourceService.getAllContrats();
+            return ResponseEntity.ok(contrats);
+        } catch (FeignException.Unauthorized e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Unauthorized to access contract service");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error fetching contracts");
+        }
     }
 }
-
-
-

@@ -1,5 +1,6 @@
 package com.example.ressource.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,5 +23,7 @@ public class Ressource {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    @JsonProperty("idContrat")
+    private Integer idContrat;
 
 }
