@@ -15,7 +15,11 @@ public class CorsConfig {
     @Bean
     public CorsWebFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        corsConfig.setAllowedOrigins(Arrays.asList(
+                "http://localhost:4200",  // Pour le frontend Angular en local
+                "http://host.docker.internal:4200"  // Pour accéder à l'hôte depuis Docker
+        ));
+        //corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With"));
         corsConfig.setExposedHeaders(Arrays.asList("Authorization"));
